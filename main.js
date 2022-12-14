@@ -29,7 +29,7 @@ d3.csv(
   d3.autoType
 ).then(function (data) {
   
-  d3.json("./persudu/subcount.json").then(function(count){
+  d3.json("./persudu/count.json").then(function(count){
     var piechar= piechart(count, g1);
     draw_scatt1(data,g2);
     draw_scatt2(data,g3);

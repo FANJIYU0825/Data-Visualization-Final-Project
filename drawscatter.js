@@ -6,7 +6,7 @@ const FWith = 800,
   FHeight = 400;
 const FLeftTopX = 10,
   FLeftTopY = 10;
-const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 100 };
+const MARGIN = { LEFT: 100, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
@@ -19,7 +19,10 @@ export function draw_scatt1(data, g) {
     .attr("text-anchor", "middle")
     .text("Size");
   // var brush = brush_scatter(g);
-  const colorscale = d3.scaleThreshold().domain([1,2,3,4,5]).range(d3.schemeSet1);
+  const colorscale = d3
+    .scaleThreshold()
+    .domain([1, 2, 3, 4, 5])
+    .range(d3.schemeSet1);
 
   g.append("g")
     .append("text")
@@ -37,13 +40,13 @@ export function draw_scatt1(data, g) {
     .text("Ratting");
   //產生xylabel
   // yscale
-  const yscale = d3
+  const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Price), 10])
-    .range([HEIGHT,0]);
+    .domain([d3.min(data, (d) => d.Price), 20])
+    .range([0, HEIGHT]);
   //xscale
-  const xscale = d3
+  const yscale = d3
     .scaleLinear()
     .domain([d3.min(data, (d) => d.Rating), d3.max(data, (d) => d.Rating)])
     .range([HEIGHT, 0]);
@@ -69,12 +72,12 @@ export function draw_scatt1(data, g) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type == "Paid") {
+      if (d.Type == "Paid" && 10 >= d.Price) {
         return xscale(d.Price);
       }
     })
     .attr("cy", function (d) {
-      if (d.Rating != null) return yscale(d.Rating);
+      if (d.Type == "Paid") return yscale(d.Rating);
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -100,7 +103,10 @@ export function draw_scatt2(data, g) {
     .attr("text-anchor", "middle")
     .text("price");
   // var brush = brush_scatter(g);
-  const colorscale = d3.scaleThreshold().domain([1, 2, 3,4,5]).range(d3.schemeSet1);
+  const colorscale = d3
+    .scaleThreshold()
+    .domain([1, 2, 3, 4, 5])
+    .range(d3.schemeSet1);
 
   g.append("g")
     .append("text")
@@ -150,12 +156,12 @@ export function draw_scatt2(data, g) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type == "Paid" && d.Rating != null) {
+      if (d.Type == "Paid") {
         return xscale(d.Rating);
       }
     })
     .attr("cy", function (d) {
-      return yscale(d.Size);
+      if (d.Type == "Paid") return yscale(d.Size);
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -180,7 +186,7 @@ export function draw_scatt3(data, g) {
   //https://d3-graph-gallery.com/graph/custom_color.html
   var Color = d3
     .scaleSequential()
-    .domain([100,1 ])
+    .domain([100, 1])
     .interpolator(d3.interpolateYlOrBr);
 
   g.append("g")
@@ -226,8 +232,7 @@ export function draw_scatt3(data, g) {
     .append("g")
     .selectAll("dot")
     .data(data)
-    .enter()
-    .append("circle")
+    .join("circle")
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
@@ -236,14 +241,13 @@ export function draw_scatt3(data, g) {
       }
     })
     .attr("cy", function (d) {
-      if (d.Category == "FAMILY") {
+      if (d.Category == "FAMILY" && d.Type == "Paid") {
         return yscale(d.Size);
       }
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      
-      return Color(d.Size)
+      return Color(d.Size);
     });
 
   var tip = top_tip2();
