@@ -261,14 +261,15 @@ export function draw_scatt3(data, g, filter) {
 }
 export function draw_scatt4(data, g, filter) {
   //text
+  const colorscale = d3
+  .scaleThreshold()
+  .domain([1, 2, 3, 4, 5])
+  .range(d3.schemeSet1);
 
   // var brush = brush_scatter(g);
   //https://github.com/d3/d3-scale-chromatic
   //https://d3-graph-gallery.com/graph/custom_color.html
-  var Color = d3
-    .scaleSequential()
-    .domain([100, 1])
-    .interpolator(d3.interpolateYlOrBr);
+ 
 
   g.append("g")
     .append("text")
@@ -334,9 +335,12 @@ export function draw_scatt4(data, g, filter) {
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Type != "Free" && d.Rating != null) {
-        return Color(d["Category"]);
-      }
+      if (d.Category == "BUSINESS") return colorscale(0);
+      else if (d.Category == "FAMILY") return colorscale(1);
+      else if (d.Category == "GAME") return colorscale(2);
+      else if (d.Category == "MEDICAL") return colorscale(3);
+      else if (d.Category == "TOOLS") return colorscale(4);
+      else return colorscale(5);
     });
 
   var tip = top_tip2();
