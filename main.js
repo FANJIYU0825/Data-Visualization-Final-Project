@@ -1,7 +1,9 @@
 import { piechart } from "./mainpie.js";
-import { draw_scatt1, draw_scatt3 } from "./drawscatter.js";
+import { draw_scatt1, draw_scatt3,draw_scatt4 } from "./drawscatter.js";
 import { draw_scatt2 } from "./drawscatter.js";
 import { frame_init } from "./init.js";
+import { dropdown } from "./dropdown_buttom.js";
+
 const FWith = 800,
   FHeight = 400;
 const FLeftTopX = 10,
@@ -12,8 +14,8 @@ const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 const svg1 = d3
   .select("#pie")
   .append("svg")
-  .attr("width", FWith - 300)
-  .attr("height", FHeight);
+  .attr("width", FWith )
+  .attr("height", FHeight+200);
 
 const g1 = svg1
   .append("g")
@@ -24,15 +26,30 @@ const g1 = svg1
 var g2 = frame_init('area1')
 var g3 = frame_init('area2')
 var g4 = frame_init('area3')
+var g5 = frame_init('Opionion')
 d3.csv(
   "./persudu/data_clean.csv",
   d3.autoType
 ).then(function (data) {
   
   d3.json("./persudu/count.json").then(function(count){
+ 
+    var botton=dropdown(count);
+   
     var piechar= piechart(count, g1);
     draw_scatt1(data,g2);
     draw_scatt2(data,g3);
     draw_scatt3(data,g4);
+    draw_scatt4(data,g5);
+    botton['bottom'].on("change", function() {
+    
+      // recover the option that has been chosen
+      var selectedOption = d3.select(this).property("value")
+  
+      // // run the updateChart function with this selected option
+      // updateChart(selectedOption)
+      draw_scatt3(data,g4,selectedOption);
+  })
+  
   })
 });

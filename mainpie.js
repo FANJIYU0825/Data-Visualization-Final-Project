@@ -24,6 +24,7 @@ function legendboard(g, domain) {
     .legendColor()
     .shape("path", circle)
     .orient("vertical")
+    .shapePadding(6)
     .scale(legendboard);
   legenuse
     .append("g")

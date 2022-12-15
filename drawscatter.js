@@ -178,8 +178,9 @@ export function draw_scatt2(data, g) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt3(data, g) {
+export function draw_scatt3(data, g, filter) {
   //text
+  if (filter == undefined) var Filter = "FAMILY";
 
   // var brush = brush_scatter(g);
   //https://github.com/d3/d3-scale-chromatic
@@ -232,26 +233,114 @@ export function draw_scatt3(data, g) {
     .append("g")
     .selectAll("dot")
     .data(data)
-    .join("circle")
+    .enter()
+    .append("circle")
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type == "Paid" && d.Rating != null && d.Category == "FAMILY") {
+      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
         return xscale(d.Rating);
       }
     })
     .attr("cy", function (d) {
-      if (d.Category == "FAMILY" && d.Type == "Paid") {
+      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
         return yscale(d.Size);
       }
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      return Color(d.Size);
+      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
+        return Color(d.Size);
+      }
     });
 
   var tip = top_tip2();
   circles.call(tip);
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
-  // circleG.call(brush);
+  return { circles: circles };
+}
+export function draw_scatt4(data, g, filter) {
+  //text
+
+  // var brush = brush_scatter(g);
+  //https://github.com/d3/d3-scale-chromatic
+  //https://d3-graph-gallery.com/graph/custom_color.html
+  var Color = d3
+    .scaleSequential()
+    .domain([100, 1])
+    .interpolator(d3.interpolateYlOrBr);
+
+  g.append("g")
+    .append("text")
+    .attr("x", WIDTH / 2)
+    .attr("y", HEIGHT + 20)
+    .attr("font-size", "10px")
+    .attr("text-anchor", "middle")
+    .text("Family");
+  g.append("text")
+    .attr("x", -(HEIGHT / 2))
+    .attr("y", -20)
+    .attr("font-size", "10px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Size");
+  //產生xylabel
+  // yscale
+  var mean = d3.mean(data, (d) => d["Reviews"]);
+  const xscale = d3
+    .scaleLinear()
+    ///
+
+    .domain([d3.min(data, (d) => d["Reviews"]), mean])
+    .range([0, HEIGHT]);
+  //xscale
+  const yscale = d3
+    .scaleLinear()
+    .domain([
+      d3.min(data, (d) => d["Rating"]),
+      d3.max(data, (d) => d["Rating"]),
+    ])
+    .range([HEIGHT, 0]);
+  // Y label
+
+  const yAxisCall = d3.axisLeft(xscale);
+  const xAxisCall = d3.axisBottom(yscale);
+  //generate the box of the char
+  g.append("g").attr("class", "scatterYa").call(yAxisCall);
+  g.append("g")
+    .attr("class", "scatterXa")
+    .call(xAxisCall)
+    .attr("transform", "translate(0," + HEIGHT + ")");
+
+  // makesure the text is remove
+
+  var circles = g
+    .append("g")
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("class", "NormScatter")
+    // circle size of the
+    .attr("cx", function (d) {
+      if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
+        return xscale(d["Reviews"]);
+      }
+    })
+    .attr("cy", function (d) {
+      if (d.Type != "Free" && d["Rating"] != null) {
+        return yscale(d["Rating"]);
+      }
+    })
+    .attr("r", 7)
+    .style("fill", function (d) {
+      if (d.Type != "Free" && d.Rating != null) {
+        return Color(d["Category"]);
+      }
+    });
+
+  var tip = top_tip2();
+  circles.call(tip);
+  circles.on("mousemove", tip.show).on("mouseout", tip.hide);
+  return { circles: circles };
 }

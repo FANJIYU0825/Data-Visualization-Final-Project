@@ -101,10 +101,14 @@ function scatter1_tool() {
         "<br> Ratting:<space> " +
         d.Rating+
         "<br> Size:<space> " +
-        d.Size
+        d.Size+
+        "<br> Size:<space> " +
+        d.App
     );
 
   return tip;
 
   //
 }
+
+
