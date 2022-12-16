@@ -32,7 +32,7 @@ d3.csv(
   d3.autoType
 ).then(function (data) {
   
-  d3.json("./persudu/count.json").then(function(count){
+  d3.json("./persudu/subcount.json").then(function(count){
  
     var botton=dropdown(count);
    
@@ -48,6 +48,7 @@ d3.csv(
   
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
+      g4.selectAll(".NormScatter").remove();
       draw_scatt3(data,g4,selectedOption);
   })
   

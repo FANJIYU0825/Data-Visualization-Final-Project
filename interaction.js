@@ -46,6 +46,11 @@ export function top_tip2(Parra) {
     var tool = scatter1_tool()
     return tool
 }
+export function top_tip3(Parra) {
+ 
+    var tool = scatter2_tool()
+    return tool
+}
 
 function pie_tool() {
   // return the string
@@ -101,14 +106,29 @@ function scatter1_tool() {
         "<br> Ratting:<space> " +
         d.Rating+
         "<br> Size:<space> " +
-        d.Size+
-        "<br> Size:<space> " +
-        d.App
+        d.Size
     );
 
   return tip;
 
   //
 }
+function scatter2_tool() {
+  // return the string
+  var tip = d3
+    .tip()
+    .attr("class", "d3-tip")
+    .html(
+      (d) =>
+        // d.ptsNorm < d.astNorm && d.rebNorm < d.astNorm
+        "<font color ='red'> Category</font>:" +
+        "<space>" +
+        d.Category +
+        "<br> Reviews:<space> " +
+        d.Reviews
+    );
 
+  return tip;
 
+  //
+}
