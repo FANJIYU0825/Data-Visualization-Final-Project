@@ -29,7 +29,7 @@ function legendboard(g, domain) {
   legenuse
     .append("g")
     .attr("class", "legendLinear")
-    .attr("transform", "translate(240,10)");
+    .attr("transform", "translate(200,10)");
   legenuse.selectAll(".legendLinear").call(legendLinear);
 }
 export function piechart(data, g) {
@@ -37,7 +37,7 @@ export function piechart(data, g) {
   legendboard(g, data);
 
   // circle size
-  var radius = Math.min(FWith, FHeight) / 2 - 40;
+  var radius = Math.min(FWith, FHeight) / 2 - 60;
 
   var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet1);
   var pie = d3.pie().value(function (d) {
@@ -55,10 +55,26 @@ export function piechart(data, g) {
     })
     .attr("stroke", "black")
     .style("stroke-width", "2px")
-    .style("opacity", 20)
-    .attr("transform", "translate(60,200)");
+    //.style("opacity", 20)
+    .attr("transform", "translate(30,200)")
+    
   // tool tip
   var tip = top_tip('pie');
   pie.call(tip);
-  pie.on("mousemove", tip.show).on("mouseout", tip.hide);
+  pie.on("mousemove", tip.show).on("mouseleave", tip.hide);
+  
+  pie.on('mouseover', function (d, i) {
+    d3.select(this).transition()
+         .duration('50')
+         .attr('opacity', '0.5')
+         .attr("d", d3.arc().innerRadius(30).outerRadius(radius+20))
+        })
+  .on('mouseout', function (d, i) {
+    d3.select(this).transition()
+         .duration('50')
+         .attr('opacity', '1')
+         .attr("d", d3.arc().innerRadius(0).outerRadius(radius))
+        });
+
+
 }

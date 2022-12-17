@@ -33,10 +33,10 @@ export function draw_scatt1(data, g,filter) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH+20)
-    .attr("y", HEIGHT + 20)
+    .attr("x", WIDTH)
+    .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
-    .attr("text-anchor", "right")
+    .attr("text-anchor", "middle")
     .text("Price");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
@@ -132,10 +132,10 @@ export function draw_scatt2(data, g,filter) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH + 20)
-    .attr("y", HEIGHT + 20)
+    .attr("x", WIDTH)
+    .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
-    .attr("text-anchor", "right")
+    .attr("text-anchor", "middle")
     .text("Rating");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
@@ -415,10 +415,10 @@ export function draw_scatt4(data, g, filters) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH+10)
-    .attr("y", HEIGHT + 20)
+    .attr("x", WIDTH)
+    .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
-    .attr("text-anchor", "right")
+    .attr("text-anchor", "middle")
     .text("Review");
   g.append("text")
     .attr("x", -(HEIGHT / 2) - 5)

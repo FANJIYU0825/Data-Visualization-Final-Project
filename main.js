@@ -15,7 +15,7 @@ const svg1 = d3
   .select("#pie")
   .append("svg")
   .attr("width", FWith )
-  .attr("height", FHeight+200);
+  .attr("height", FHeight);
 
 const g1 = svg1
   .append("g")
