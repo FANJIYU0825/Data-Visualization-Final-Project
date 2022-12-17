@@ -2,22 +2,23 @@
 import { top_tip1, top_tip3 } from "./interaction.js";
 import { top_tip2 } from "./interaction.js";
 
-const FWith = 800,
+const FWith = 600,
   FHeight = 400;
 const FLeftTopX = 10,
   FLeftTopY = 10;
-const MARGIN = { LEFT: 100, RIGHT: 100, TOP: 10, BOTTOM: 100 };
+const MARGIN = { LEFT: 30, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
 export function draw_scatt1(data, g) {
+  // X: price , Y: Rating
   //text
-  g.append("text")
-    .attr("x", 200)
-    .attr("y", 10)
-    .attr("font-size", "30px")
-    .attr("text-anchor", "middle")
-    .text("Size");
+  // g.append("text")
+  //   .attr("x", 200)
+  //   .attr("y", 10)
+  //   .attr("font-size", "30px")
+  //   .attr("text-anchor", "middle")
+  //   .text("Size");
   // var brush = brush_scatter(g);
   const colorscale = d3
     .scaleThreshold()
@@ -26,15 +27,15 @@ export function draw_scatt1(data, g) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH / 2)
+    .attr("x", WIDTH+20)
     .attr("y", HEIGHT + 20)
-    .attr("font-size", "10px")
-    .attr("text-anchor", "middle")
+    .attr("font-size", "20px")
+    .attr("text-anchor", "right")
     .text("Price");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
     .attr("y", -20)
-    .attr("font-size", "10px")
+    .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Ratting");
@@ -43,8 +44,8 @@ export function draw_scatt1(data, g) {
   const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Price), 20])
-    .range([0, HEIGHT]);
+    .domain([d3.min(data, (d) => d.Price)-20, d3.max(data, (d) => d.Price)])
+    .range([0, WIDTH]);
   //xscale
   const yscale = d3
     .scaleLinear()
@@ -72,12 +73,14 @@ export function draw_scatt1(data, g) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type == "Paid" && 10 >= d.Price) {
-        return xscale(d.Price);
-      }
+      return xscale(d.Price);
+      // if (d.Type == "Paid" && 10 >= d.Price) {
+      //   return xscale(d.Price);
+      // }
     })
     .attr("cy", function (d) {
-      if (d.Type == "Paid") return yscale(d.Rating);
+      return yscale(d.Rating);
+      //if (d.Type == "Paid") return yscale(d.Rating);
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -95,13 +98,15 @@ export function draw_scatt1(data, g) {
   // circleG.call(brush);
 }
 export function draw_scatt2(data, g) {
+  // X : rating , Y: Size
+
   //text
-  g.append("text")
-    .attr("x", 200)
-    .attr("y", 10)
-    .attr("font-size", "30px")
-    .attr("text-anchor", "middle")
-    .text("price");
+  // g.append("text")
+  //   .attr("x", 200)
+  //   .attr("y", 10)
+  //   .attr("font-size", "30px")
+  //   .attr("text-anchor", "middle")
+  //   .text("price");
   // var brush = brush_scatter(g);
   const colorscale = d3
     .scaleThreshold()
@@ -110,15 +115,15 @@ export function draw_scatt2(data, g) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH / 2)
+    .attr("x", WIDTH + 20)
     .attr("y", HEIGHT + 20)
-    .attr("font-size", "10px")
-    .attr("text-anchor", "middle")
-    .text("Price");
+    .attr("font-size", "20px")
+    .attr("text-anchor", "right")
+    .text("Rating");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
     .attr("y", -20)
-    .attr("font-size", "10px")
+    .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Size");
@@ -127,12 +132,12 @@ export function draw_scatt2(data, g) {
   const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Rating), d3.max(data, (d) => d.Rating)])
-    .range([0, HEIGHT]);
+    .domain([d3.min(data, (d) => d.Rating)-0.1, d3.max(data, (d) => d.Rating)])
+    .range([0, WIDTH]);
   //xscale
   const yscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.Size), d3.max(data, (d) => d.Size)])
+    .domain([d3.min(data, (d) => d.Size)-5, d3.max(data, (d) => d.Size)+20])
     .range([HEIGHT, 0]);
   // Y label
 
@@ -178,34 +183,34 @@ export function draw_scatt2(data, g) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt3(data, g, filter) {
+export function draw_scatt3(data, g, filter="BUSINESS") {
   //text
-  if (filter == undefined) var Filter = "FAMILY";
+  if (filter == undefined) var Filter = "BUSINESS";
   else {
     g.selectAll(".NormScatter").remove();
     g.selectAll(".scatterYa").remove();
     g.selectAll(".scatterXa").remove();
   }
-
+  
   // var brush = brush_scatter(g);
   //https://github.com/d3/d3-scale-chromatic
   //https://d3-graph-gallery.com/graph/custom_color.html
   var Color = d3
     .scaleSequential()
-    .domain([100, 1])
+    .domain([1, 100])
     .interpolator(d3.interpolateYlOrBr);
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH / 2)
+    .attr("x", WIDTH+ 10)
     .attr("y", HEIGHT + 20)
-    .attr("font-size", "10px")
-    .attr("text-anchor", "middle")
-    .text("Family");
+    .attr("font-size", "20px")
+    .attr("text-anchor", "right")
+    .text("Category");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
-    .attr("y", -20)
-    .attr("font-size", "10px")
+    .attr("y", -25)
+    .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Size");
@@ -214,12 +219,12 @@ export function draw_scatt3(data, g, filter) {
   const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Rating), d3.max(data, (d) => d.Rating)])
-    .range([0, HEIGHT]);
+    .domain([d3.min(data, (d) => d.Rating)-0.1, d3.max(data, (d) => d.Rating)])
+    .range([0, WIDTH]);
   //xscale
   const yscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.Size), d3.max(data, (d) => d.Size)])
+    .domain([d3.min(data, (d) => d.Size)-5, d3.max(data, (d) => d.Size)+20])
     .range([HEIGHT, 0]);
   // Y label
 
@@ -242,18 +247,18 @@ export function draw_scatt3(data, g, filter) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
+      if (d.Rating != null) {
         return xscale(d.Rating);
       }
     })
     .attr("cy", function (d) {
-      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
+      if (d.Rating != null) {
         return yscale(d.Size);
       }
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Type != "Free" && d.Rating != null && d.Category == Filter) {
+      if (d.Rating != null) {
         return Color(d.Size);
       }
     });
@@ -364,26 +369,26 @@ export function draw_scatt4(data, g, filters) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH / 2 + 5)
-    .attr("y", HEIGHT + 20 + 10)
+    .attr("x", WIDTH+10)
+    .attr("y", HEIGHT + 20)
     .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .text("Last Update");
+    .attr("text-anchor", "right")
+    .text("Review");
   g.append("text")
     .attr("x", -(HEIGHT / 2) - 5)
     .attr("y", -25)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Reviews");
+    .text("Rating");
   //產生xylabel
   // yscale
   var mean = d3.mean(data, (d) => d["Reviews"]);
   const xscale = d3
     .scaleLinear()
 
-    .domain([d3.min(data, (d) => d["Reviews"]), mean])
-    .range([0, HEIGHT]);
+    .domain([d3.min(data, (d) => d["Reviews"])-3, mean])
+    .range([0, WIDTH]);
   //xscale
   const yscale = d3
     .scaleLinear()

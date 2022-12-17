@@ -5,6 +5,7 @@ export function dropdown(data) {
     result.push([i, data[i]]);
   }
   var legentext = [];
+  legentext.push("ALL")
   for (let i = 0; i < result.length; i++) {
     legentext.push([result[i][0]]);
   }

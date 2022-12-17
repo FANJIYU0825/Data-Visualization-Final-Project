@@ -49,7 +49,22 @@ d3.csv(
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
       g4.selectAll(".NormScatter").remove();
-      draw_scatt3(data,g4,selectedOption);
+      var selectList = []
+      if (selectedOption != "ALL"){
+        data.forEach(element => {
+          if (element['Category'] == selectedOption){
+            //console.log(element)
+            selectList.push(element)
+          }
+          
+        });
+        
+      }
+      else{
+        selectList = data
+      }
+      
+      draw_scatt3(selectList,g4,selectedOption);
   })
   
   })
