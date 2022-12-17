@@ -39,8 +39,8 @@ d3.csv(
     var piechar= piechart(count, g1);
     draw_scatt1(data,g2);
     draw_scatt2(data,g3);
-    draw_scatt3(data,g4);
-    draw_scatt4(data,g5);
+    //draw_scatt3(data,g4);
+    draw_scatt4(data,g4);
     botton['bottom'].on("change", function() {
     
       // recover the option that has been chosen
@@ -48,7 +48,9 @@ d3.csv(
   
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
-      g4.selectAll(".NormScatter").remove();
+      //g4.selectAll(".NormScatter").remove();
+      g3.selectAll(".NormScatter").remove();
+      g2.selectAll(".NormScatter").remove();
       var selectList = []
       if (selectedOption != "ALL"){
         data.forEach(element => {
@@ -63,8 +65,9 @@ d3.csv(
       else{
         selectList = data
       }
-      
-      draw_scatt3(selectList,g4,selectedOption);
+      draw_scatt1(selectList,g2,selectedOption);
+      draw_scatt2(selectList,g3,selectedOption);
+      //draw_scatt3(selectList,g4,selectedOption);
   })
   
   })

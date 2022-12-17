@@ -10,7 +10,7 @@ const MARGIN = { LEFT: 30, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
-export function draw_scatt1(data, g) {
+export function draw_scatt1(data, g,filter) {
   // X: price , Y: Rating
   //text
   // g.append("text")
@@ -20,6 +20,12 @@ export function draw_scatt1(data, g) {
   //   .attr("text-anchor", "middle")
   //   .text("Size");
   // var brush = brush_scatter(g);
+  if (filter == undefined);
+  else {
+    g.selectAll(".NormScatter").remove();
+    g.selectAll(".scatterYa").remove();
+    g.selectAll(".scatterXa").remove();
+  }
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
@@ -38,14 +44,14 @@ export function draw_scatt1(data, g) {
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .text("Ratting");
+    .text("Rating");
   //產生xylabel
   // yscale
   const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Price)-20, d3.max(data, (d) => d.Price)])
-    .range([0, WIDTH]);
+    .domain([d3.min(data, (d) => d.Price), d3.max(data, (d) => d.Price)])
+    .range([10, WIDTH]);
   //xscale
   const yscale = d3
     .scaleLinear()
@@ -97,7 +103,7 @@ export function draw_scatt1(data, g) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt2(data, g) {
+export function draw_scatt2(data, g,filter) {
   // X : rating , Y: Size
 
   //text
@@ -108,10 +114,21 @@ export function draw_scatt2(data, g) {
   //   .attr("text-anchor", "middle")
   //   .text("price");
   // var brush = brush_scatter(g);
+  if (filter == undefined);
+  else {
+    g.selectAll(".NormScatter").remove();
+    g.selectAll(".scatterYa").remove();
+    g.selectAll(".scatterXa").remove();
+  }
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
     .range(d3.schemeSet1);
+  var Color_free = d3
+  .scaleSequential()
+  .domain([1, 500])
+  .interpolator(d3.interpolateYlOrBr);
+
 
   g.append("g")
     .append("text")
@@ -151,6 +168,33 @@ export function draw_scatt2(data, g) {
     .attr("transform", "translate(0," + HEIGHT + ")");
 
   // makesure the text is remove
+  var circles_free = g
+  .append("g")
+  .selectAll("dot")
+  .data(data)
+  .enter()
+  .append("circle")
+  .attr("class", "NormScatter")
+  // circle size of the
+  .attr("cx", function (d) {
+    if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+      return xscale(d.Rating);
+    }
+  })
+  .attr("cy", function (d) {
+    if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+      return yscale(d.Size);
+    }
+    
+  })
+  .attr("r", 7)
+  .style("fill", function (d) {
+    if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+      return Color_free(d.Size);
+    }
+  })
+  .attr('stroke','#000')
+  .attr('stroke-width',0.1);
 
   var circles = g
     .append("g")
@@ -181,11 +225,13 @@ export function draw_scatt2(data, g) {
   var tip = top_tip2();
   circles.call(tip);
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
+  circles_free.call(tip);
+  circles_free.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt3(data, g, filter="BUSINESS") {
+export function draw_scatt3(data, g, filter) {
   //text
-  if (filter == undefined) var Filter = "BUSINESS";
+  if (filter == undefined);
   else {
     g.selectAll(".NormScatter").remove();
     g.selectAll(".scatterYa").remove();
@@ -247,18 +293,18 @@ export function draw_scatt3(data, g, filter="BUSINESS") {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Rating != null) {
+      if (d.Rating != null && d.Size != null) {
         return xscale(d.Rating);
       }
     })
     .attr("cy", function (d) {
-      if (d.Rating != null) {
+      if (d.Rating != null && d.Size != null) {
         return yscale(d.Size);
       }
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Rating != null) {
+      if (d.Rating != null && d.Size != null) {
         return Color(d.Size);
       }
     });
