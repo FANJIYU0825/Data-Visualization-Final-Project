@@ -1,5 +1,5 @@
 import { piechart } from "./mainpie.js";
-import { draw_scatt1, draw_scatt3,draw_scatt4 } from "./drawscatter.js";
+import { draw_scatt1, draw_scatt3,draw_scatt4, draw_scatt5 } from "./drawscatter.js";
 import { draw_scatt2 } from "./drawscatter.js";
 import { frame_init } from "./init.js";
 import { dropdown } from "./dropdown_buttom.js";
@@ -26,21 +26,24 @@ const g1 = svg1
 var g2 = frame_init('area1')
 var g3 = frame_init('area2')
 var g4 = frame_init('area3')
-var g5 = frame_init('Opionion')
+
+
+var g5 = frame_init('area4')
 d3.csv(
   "./persudu/data_clean.csv",
   d3.autoType
 ).then(function (data) {
   
   d3.json("./persudu/subcount.json").then(function(count){
- 
+    
     var botton=dropdown(count);
    
     var piechar= piechart(count, g1);
     draw_scatt1(data,g2);
     draw_scatt2(data,g3);
-    //draw_scatt3(data,g4);
+    
     draw_scatt4(data,g4);
+    draw_scatt5(data,g5);
     botton['bottom'].on("change", function() {
     
       // recover the option that has been chosen
