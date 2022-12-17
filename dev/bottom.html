@@ -2,61 +2,53 @@
 <meta charset="utf-8">
 
 <!-- Load d3.js -->
-<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
-<!-- Create a div where the circle will take place -->
-<div id="dataviz_builtWithD3"></div>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
 
-
-<!-- Add  button-->
 <script>
 
-    // Create data = list of groups
-    var allGroup = ["yellow", "blue", "red", "green", "purple", "black"]
-    
-    // Initialize the button
-    var dropdownButton = d3.select("#dataviz_builtWithD3")
-      .append('select')
-    
-    // add the options to the button
-    dropdownButton // Add a button
-      .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
-         .data(allGroup)
-      .enter()
-        .append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button
-    
-    // Initialize a circle
-    var zeCircle = d3.select("#dataviz_builtWithD3")
-      .append("svg")
-      .append("circle")
-        .attr("cx", 100)
-        .attr("cy", 70)
-        .attr("stroke", "black")
-        .style("fill", "yellow")
-        .attr("r", 20)
-    
-    // A function that update the color of the circle
-    function updateChart(mycolor) {
-      zeCircle
-        .transition()
-        .duration(1000)
-        .style("fill", mycolor)
-    }
-    
-    // When the button is changed, run the updateChart function
-    dropdownButton.on("change", function(d) {
-    
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-    
-        // run the updateChart function with this selected option
-        updateChart(selectedOption)
+    // set the dimensions and margins of the graph
+    const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    //Read the data
+    d3.csv("https://gist.githubusercontent.com/FANJIYU0825/5626c7449001fc46895412fda1b5c139/raw/9e996d1edec867b2f590285c4e1e769dd482b91c/clean_data").then(function (data) {
+
+        // Add X axis
+        const x = d3.scaleLinear()
+            .domain([d3.min(data, (d) => d.Rating) - 0.1, d3.max(data, (d) => d.Rating),])
+            .range([0, width]);
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x));
+
+        // Add Y axis
+        const y = d3.scaleLinear()
+            .domain([d3.min(data, (d) => d.Size) - 5, d3.max(data, (d) => d.Size) + 20])
+            .range([height, 0]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Add dots
+        svg.append('g')
+            .selectAll("dot")
+            .data(data)
+            .join("circle")
+            .attr("cx", (d, i) => {  if (d.Category == "BUSINESS")return x(d.Rating); })
+            .attr("cy", (d, i) => { return y(d.Size); })
+            .attr("r", 7)
+            .style("fill", "#69b3a2")
+
     })
-    
-    
-    
-    
-    </script>
-<!-- Create a div where the circle will take place -->
+</script>
