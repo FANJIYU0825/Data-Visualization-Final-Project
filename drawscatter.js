@@ -417,7 +417,7 @@ export function draw_scatt5(data, g,filter) {
 
   g.append("g")
     .append("text")
-    .attr("x", WIDTH)
+    .attr("x", WIDTH-30)
     .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
