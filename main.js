@@ -51,7 +51,8 @@ d3.csv(
   
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
-      //g4.selectAll(".NormScatter").remove();
+      g5.selectAll(".NormScatter").remove();
+      g4.selectAll(".NormScatter").remove();
       g3.selectAll(".NormScatter").remove();
       g2.selectAll(".NormScatter").remove();
       var selectList = []
@@ -70,7 +71,8 @@ d3.csv(
       }
       draw_scatt1(selectList,g2,selectedOption);
       draw_scatt2(selectList,g3,selectedOption);
-      //draw_scatt3(selectList,g4,selectedOption);
+      draw_scatt4(selectList,g4,selectedOption);
+      draw_scatt5(selectList,g5,selectedOption);
   })
   
   })

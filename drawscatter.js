@@ -304,9 +304,14 @@ export function draw_scatt3(data, g, filter) {
 }
 
 function time_formate(data) {}
-export function draw_scatt4(data, g, filters) {
+export function draw_scatt4(data, g, filter) {
   //text
-
+  if (filter == undefined);
+  else {
+    g.selectAll(".NormScatter").remove();
+    g.selectAll(".scatterYa").remove();
+    g.selectAll(".scatterXa").remove();
+  }
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
@@ -370,35 +375,15 @@ export function draw_scatt4(data, g, filters) {
     // .attr("cx", function (d) {return xscale(d["Reviews"]);})
     // .attr("cy", function (d) {return yscale(d["Rating"]);})
     .attr("cx", function (d) {
-      if (filters == undefined) {
         if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
           return xscale(d["Reviews"]);
-        } else if (filters != undefined) {
-          if (
-            d.Type != "Free" &&
-            d["Reviews"] != null &&
-            mean >= d["Reviews"] &&
-            d.Category == filters
-          )
-            return xscale(d["Reviews"]);
-        }
-      }
+        }  
     })
     .attr("cy", function (d) {
-      if (filters == undefined) {
-        if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
-          return yscale(d["Rating"]);
-        } else if (filters != undefined) {
-          if (
-            d.Type != "Free" &&
-            d["Reviews"] != null &&
-            mean >= d["Reviews"]
-          ) {
-            return yscale(d["Rating"]);
-          }
-        } else {
-        }
-      }
+      if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
+        return yscale(d["Rating"]);
+      } 
+      
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -415,12 +400,36 @@ export function draw_scatt4(data, g, filters) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   return { circles: circles };
 }
-export function draw_scatt5(data, g) {
+export function draw_scatt5(data, g,filter) {
   // x:time y:reviews
+  if (filter == undefined);
+  else {
+    g.selectAll(".NormScatter").remove();
+    g.selectAll(".scatterYa").remove();
+    g.selectAll(".scatterXa").remove();
+  }
+
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
     .range(d3.schemeSet1);
+
+
+  g.append("g")
+    .append("text")
+    .attr("x", WIDTH)
+    .attr("y", HEIGHT + 40)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .text("Update time");
+  g.append("text")
+    .attr("x", -(HEIGHT / 2))
+    .attr("y", -20)
+    .attr("font-size", "20px")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .text("Review");
+
 
   var xScale = d3
     .scaleTime()
@@ -442,7 +451,7 @@ export function draw_scatt5(data, g) {
   const yscale = d3
     .scaleLinear()
 
-    .domain([d3.min(data, (d) => d["Reviews"]) - 3, mean])
+    .domain([d3.min(data, (d) => d["Reviews"]), mean])
 
     .range([HEIGHT, 0]);
   // Y label
