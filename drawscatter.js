@@ -107,7 +107,7 @@ export function draw_scatt2(data, g, filter) {
     .range(d3.schemeSet1);
   var Color_free = d3
     .scaleSequential()
-    .domain([1, 500])
+    .domain([120,1])
     .interpolator(d3.interpolateYlOrBr);
 
   g.append("g")
@@ -194,7 +194,7 @@ export function draw_scatt2(data, g, filter) {
     .attr("cy", function (d) {
       if (d.Type == "Paid") return yscale(d.Size);
       else {
-        console.log("found");
+        
       }
     })
     .attr("r", 7)
@@ -467,12 +467,12 @@ export function draw_scatt5(data, g,filter) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Rating != null && d.Size != null) {
+      if (d.Rating != null && d.Size != null&& d.Type == "Paid") {
         return xScale(d["Last Updated"]);
       }
     })
     .attr("cy", function (d) {
-      if (d.Rating != null && d.Size != null) {
+      if (d.Rating != null && d.Size != null&& d.Type == "Paid") {
         return yscale(d["Reviews"]);
       }
     })

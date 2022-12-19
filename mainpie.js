@@ -56,25 +56,33 @@ export function piechart(data, g) {
     .attr("stroke", "black")
     .style("stroke-width", "2px")
     //.style("opacity", 20)
-    .attr("transform", "translate(30,200)")
-    
+    .attr("transform", "translate(30,200)");
+
   // tool tip
-  var tip = top_tip('pie');
+  var tip = top_tip("pie");
   pie.call(tip);
   pie.on("mousemove", tip.show).on("mouseleave", tip.hide);
-  
-  pie.on('mouseover', function (d, i) {
-    d3.select(this).transition()
-         .duration('50')
-         .attr('opacity', '0.5')
-         .attr("d", d3.arc().innerRadius(30).outerRadius(radius+20))
-        })
-  .on('mouseout', function (d, i) {
-    d3.select(this).transition()
-         .duration('50')
-         .attr('opacity', '1')
-         .attr("d", d3.arc().innerRadius(0).outerRadius(radius))
-        });
 
-
+  // pie
+  //   .on("mouseover", function (d, i) {
+  //     d3.select(this)
+  //       .transition()
+  //       .duration("50")
+  //       .attr("opacity", "0.5")
+  //       .attr(
+  //         "d",
+  //         d3
+  //           .arc()
+  //           .innerRadius(30)
+  //           .outerRadius(radius + 20)
+  //       );
+  //   })
+  //   .on("mouseout", function (d, i) {
+  //     d3.select(this)
+  //       .transition()
+  //       .duration("50")
+  //       .attr("opacity", "1")
+  //       .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
+  //   });
+  return { pie: pie ,radius:radius};
 }
