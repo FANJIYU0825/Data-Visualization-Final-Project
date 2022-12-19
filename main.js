@@ -1,13 +1,13 @@
 import { piechart } from "./src/mainpie.js";
 import {
   draw_scatt1,
-  draw_scatt3,
   draw_scatt4,
   draw_scatt5,
 } from "./src/drawscatter.js";
 import { draw_scatt2 } from "./src/drawscatter.js";
 import { frame_init } from "./src/init.js";
 import { dropdown } from "./src/dropdown_buttom.js";
+import { draw_histamgram } from "./src/drawHistogram.js";
 
 const FWith = 800,
   FHeight = 400;
@@ -46,7 +46,8 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     draw_scatt2(data, g3);
 
     draw_scatt4(data, g4);
-    draw_scatt5(data, g5);
+    // draw_scatt5(data, g5);
+    draw_histamgram(data,g5);
 
     pie
       .on("mouseover", function (d, i) {
@@ -105,7 +106,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       draw_scatt1(selectList, g2, selectedOption);
       draw_scatt2(selectList, g3, selectedOption);
       draw_scatt4(selectList, g4, selectedOption);
-      draw_scatt5(selectList, g5, selectedOption);
+      draw_histamgram(selectList,g5,1,selectedOption);
     });
   });
 });
