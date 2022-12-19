@@ -106,7 +106,7 @@ export function draw_scatt2(data, g, filter) {
     .range(d3.schemeSet1);
   var Color_free = d3
     .scaleSequential()
-    .domain([120, 1])
+    .domain([1, 500])
     .interpolator(d3.interpolateYlOrBr);
 
   g.append("g")

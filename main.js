@@ -1,13 +1,13 @@
-import { piechart } from "./mainpie.js";
+import { piechart } from "./src/mainpie.js";
 import {
   draw_scatt1,
   draw_scatt3,
   draw_scatt4,
   draw_scatt5,
-} from "./drawscatter.js";
-import { draw_scatt2 } from "./drawscatter.js";
-import { frame_init } from "./init.js";
-import { dropdown } from "./dropdown_buttom.js";
+} from "./src/drawscatter.js";
+import { draw_scatt2 } from "./src/drawscatter.js";
+import { frame_init } from "./src/init.js";
+import { dropdown } from "./src/dropdown_buttom.js";
 
 const FWith = 800,
   FHeight = 400;
