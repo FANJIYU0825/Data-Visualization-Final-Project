@@ -39,7 +39,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
 
     var piechar = piechart(count, g1);
     var pie = piechar["pie"];
-    var radius = piechar['radius']
+    var radius = piechar["radius"];
     draw_scatt1(data, g2);
     draw_scatt2(data, g3);
 
@@ -52,7 +52,13 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .transition()
           .duration("50")
           .attr("opacity", "0.5")
-          .attr("d", d3.arc().innerRadius(30).outerRadius(radius +20));
+          .attr(
+            "d",
+            d3
+              .arc()
+              .innerRadius(30)
+              .outerRadius(radius + 20)
+          );
       })
       .on("mouseout", function (d, i) {
         d3.select(this)
@@ -60,16 +66,29 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .duration("50")
           .attr("opacity", "1")
           .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
-      }).on('click', (d,i)=> {
-        d3.select(this)
-
+      })
+      .on("click", (d, i) => {
+        g5.selectAll(".NormScatter").remove();
+        g4.selectAll(".NormScatter").remove();
+        g3.selectAll(".NormScatter").remove();
+        g2.selectAll(".NormScatter").remove();
+        var selectList = [];
+        data.forEach((element) => {
+          if (element["Category"] == d.data.key) {
+            selectList.push(element);
+          }
+        });
+        draw_scatt1(selectList, g2);
+        draw_scatt2(selectList, g3);
+        draw_scatt4(selectList, g4);
+        draw_scatt5(selectList, g5);
       });
-    botton["bottom"].on("change", ()=> {
+    botton["bottom"].on("change", () => {
       // recover the option that has been chosen
       var selectedOption = d3.select(this).property("value");
 
       // // run the updateChart function with this selected option
-      // updateChart(selectedOption)
+
       g5.selectAll(".NormScatter").remove();
       g4.selectAll(".NormScatter").remove();
       g3.selectAll(".NormScatter").remove();

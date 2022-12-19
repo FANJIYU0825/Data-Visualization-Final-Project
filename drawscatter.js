@@ -66,8 +66,7 @@ export function draw_scatt1(data, g, filter) {
     .append("g")
     .selectAll("dot")
     .data(data)
-    .enter()
-    .append("circle")
+    .join("circle")
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
@@ -107,7 +106,7 @@ export function draw_scatt2(data, g, filter) {
     .range(d3.schemeSet1);
   var Color_free = d3
     .scaleSequential()
-    .domain([120,1])
+    .domain([120, 1])
     .interpolator(d3.interpolateYlOrBr);
 
   g.append("g")
@@ -194,7 +193,6 @@ export function draw_scatt2(data, g, filter) {
     .attr("cy", function (d) {
       if (d.Type == "Paid") return yscale(d.Size);
       else {
-        
       }
     })
     .attr("r", 7)
@@ -375,15 +373,14 @@ export function draw_scatt4(data, g, filter) {
     // .attr("cx", function (d) {return xscale(d["Reviews"]);})
     // .attr("cy", function (d) {return yscale(d["Rating"]);})
     .attr("cx", function (d) {
-        if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
-          return xscale(d["Reviews"]);
-        }  
+      if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
+        return xscale(d["Reviews"]);
+      }
     })
     .attr("cy", function (d) {
       if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
         return yscale(d["Rating"]);
-      } 
-      
+      }
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -400,7 +397,7 @@ export function draw_scatt4(data, g, filter) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   return { circles: circles };
 }
-export function draw_scatt5(data, g,filter) {
+export function draw_scatt5(data, g, filter) {
   // x:time y:reviews
   if (filter == undefined);
   else {
@@ -414,10 +411,9 @@ export function draw_scatt5(data, g,filter) {
     .domain([1, 2, 3, 4, 5])
     .range(d3.schemeSet1);
 
-
   g.append("g")
     .append("text")
-    .attr("x", WIDTH-30)
+    .attr("x", WIDTH - 30)
     .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
@@ -429,7 +425,6 @@ export function draw_scatt5(data, g,filter) {
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Review");
-
 
   var xScale = d3
     .scaleTime()
@@ -467,12 +462,12 @@ export function draw_scatt5(data, g,filter) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Rating != null && d.Size != null&& d.Type == "Paid") {
+      if (d.Rating != null && d.Size != null && d.Type == "Paid") {
         return xScale(d["Last Updated"]);
       }
     })
     .attr("cy", function (d) {
-      if (d.Rating != null && d.Size != null&& d.Type == "Paid") {
+      if (d.Rating != null && d.Size != null && d.Type == "Paid") {
         return yscale(d["Reviews"]);
       }
     })
@@ -485,7 +480,7 @@ export function draw_scatt5(data, g,filter) {
       else if (d.Category == "TOOLS") return colorscale(4);
       else return colorscale(5);
     });
-    var tip = top_tip3();
-    circles.call(tip);
-    circles.on("mousemove", tip.show).on("mouseout", tip.hide);
+  var tip = top_tip3();
+  circles.call(tip);
+  circles.on("mousemove", tip.show).on("mouseout", tip.hide);
 }
