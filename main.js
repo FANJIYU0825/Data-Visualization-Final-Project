@@ -103,7 +103,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       } else {
         selectList = data;
       }
-      draw_scatt1(selectList, g2, selectedOption);
+      draw_scatt1(selectList, g2, selectedOption,count);
       draw_scatt2(selectList, g3, selectedOption,count);
       draw_scatt4(selectList, g4, selectedOption,count);
       draw_histamgram(selectList,count,g5,1,selectedOption);
