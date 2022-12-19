@@ -428,7 +428,7 @@ export function draw_scatt5(data, g, filter) {
 
   var xScale = d3
     .scaleTime()
-    .domain([new Date("2016-01-01"), new Date("2018-08-08")])
+    .domain([new Date("2010-01-01"), new Date("2018-08-08")])
     .range([0, WIDTH]);
 
   var xAxis = d3.axisBottom(xScale).tickFormat(function (date) {
