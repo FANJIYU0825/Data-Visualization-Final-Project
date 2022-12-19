@@ -83,31 +83,35 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt4(selectList, g4);
         draw_scatt5(selectList, g5);
       });
-    botton["bottom"].on("change", () => {
-      // recover the option that has been chosen
-      var selectedOption = d3.select(this).property("value");
-
-      // // run the updateChart function with this selected option
-
-      g5.selectAll(".NormScatter").remove();
-      g4.selectAll(".NormScatter").remove();
-      g3.selectAll(".NormScatter").remove();
-      g2.selectAll(".NormScatter").remove();
-      var selectList = [];
-      if (selectedOption != "ALL") {
-        data.forEach((element) => {
-          if (element["Category"] == selectedOption) {
-            //console.log(element)
-            selectList.push(element);
-          }
-        });
-      } else {
-        selectList = data;
-      }
-      draw_scatt1(selectList, g2, selectedOption);
-      draw_scatt2(selectList, g3, selectedOption);
-      draw_scatt4(selectList, g4, selectedOption);
-      draw_scatt5(selectList, g5, selectedOption);
-    });
+      botton['bottom'].on("change", function() {
+    
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+    
+        // // run the updateChart function with this selected option
+        // updateChart(selectedOption)
+        g5.selectAll(".NormScatter").remove();
+        g4.selectAll(".NormScatter").remove();
+        g3.selectAll(".NormScatter").remove();
+        g2.selectAll(".NormScatter").remove();
+        var selectList = []
+        if (selectedOption != "ALL"){
+          data.forEach(element => {
+            if (element['Category'] == selectedOption){
+              //console.log(element)
+              selectList.push(element)
+            }
+            
+          });
+          
+        }
+        else{
+          selectList = data
+        }
+        draw_scatt1(selectList,g2,selectedOption);
+        draw_scatt2(selectList,g3,selectedOption);
+        draw_scatt4(selectList,g4,selectedOption);
+        draw_scatt5(selectList,g5,selectedOption);
+    })
   });
 });
