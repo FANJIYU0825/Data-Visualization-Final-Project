@@ -19,7 +19,8 @@ function legendboard(g, domain) {
     legentext.push([result[i][0]]);
   }
   var legenuse = g.append("g");
-  var legendboard = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet1);
+  var legendboard = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
+  // var legendboard = d3.scaleSequential().domain(legentext).interpolator(d3.interpolateYlOrBr);
   var legendLinear = d3
     .legendColor()
     .shape("path", circle)
@@ -39,7 +40,7 @@ export function piechart(data, g) {
   // circle size
   var radius = Math.min(FWith, FHeight) / 2 - 60;
 
-  var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet1);
+  var color = d3.scaleOrdinal().domain(data).range(d3.schemeSet3);
   var pie = d3.pie().value(function (d) {
     return d.value;
   });

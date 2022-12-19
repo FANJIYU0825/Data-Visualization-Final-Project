@@ -23,7 +23,7 @@ export function draw_scatt1(data, g, filter) {
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeSet1);
+    .range(d3.schemeSet3);
 
   g.append("g")
     .append("text")
@@ -103,7 +103,7 @@ export function draw_scatt2(data, g, filter) {
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeSet1);
+    .range(d3.schemeSet3);
   var Color_free = d3
     .scaleSequential()
     .domain([1, 500])
@@ -313,7 +313,7 @@ export function draw_scatt4(data, g, filter) {
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeSet1);
+    .range(d3.schemeSet3);
 
   // var brush = brush_scatter(g);
   //https://github.com/d3/d3-scale-chromatic
@@ -409,7 +409,7 @@ export function draw_scatt5(data, g, filter) {
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeSet1);
+    .range(d3.schemeSet3);
 
   g.append("g")
     .append("text")
@@ -428,7 +428,7 @@ export function draw_scatt5(data, g, filter) {
 
   var xScale = d3
     .scaleTime()
-    .domain([new Date("2010-05-21"), new Date("2018-08-08")])
+    .domain([new Date("2016-01-01"), new Date("2018-08-08")])
     .range([0, WIDTH]);
 
   var xAxis = d3.axisBottom(xScale).tickFormat(function (date) {

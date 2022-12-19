@@ -16,6 +16,7 @@ const FLeftTopX = 10,
 const MARGIN = { LEFT: 100, RIGHT: 10, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
+//frame genration
 const svg1 = d3
   .select("#pie")
   .append("svg")
@@ -33,6 +34,7 @@ var g3 = frame_init("area2");
 var g4 = frame_init("area3");
 
 var g5 = frame_init("area4");
+//main data
 d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
   d3.json("./persudu/subcount.json").then(function (count) {
     var botton = dropdown(count);
@@ -68,46 +70,42 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
       })
       .on("click", (d, i) => {
-        d3.select(this)
-        .transition()
-        .duration("50");
+        // the click we use that help the radius update by the click
+        var click_value = d.data.key;
+        d3.select(this).transition().duration("50");
         var selectList = [];
         data.forEach((element) => {
-          if (element["Category"] == d.data.key) {
+          if (element["Category"] == click_value) {
             selectList.push(element);
           }
         });
-        draw_scatt1(selectList, g2,d.data.key);
-        draw_scatt2(selectList, g3,d.data.key);
-        draw_scatt4(selectList, g4,d.data.key);
-        draw_scatt5(selectList, g5,d.data.key);
+        draw_scatt1(selectList, g2, click_value);
+        draw_scatt2(selectList, g3, click_value);
+        draw_scatt4(selectList, g4, click_value);
+        draw_scatt5(selectList, g5, click_value);
       });
-      botton['bottom'].on("change", function() {
-    
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-    
-        // // run the updateChart function with this selected option
-        // updateChart(selectedOption)
-    
-        var selectList = []
-        if (selectedOption != "ALL"){
-          data.forEach(element => {
-            if (element['Category'] == selectedOption){
-              //console.log(element)
-              selectList.push(element)
-            }
-            
-          });
-          
-        }
-        else{
-          selectList = data
-        }
-        draw_scatt1(selectList,g2,selectedOption);
-        draw_scatt2(selectList,g3,selectedOption);
-        draw_scatt4(selectList,g4,selectedOption);
-        draw_scatt5(selectList,g5,selectedOption);
-    })
+    botton["bottom"].on("change", function () {
+      // recover the option that has been chosen
+      var selectedOption = d3.select(this).property("value");
+
+      // // run the updateChart function with this selected option
+      // updateChart(selectedOption)
+
+      var selectList = [];
+      if (selectedOption != "ALL") {
+        data.forEach((element) => {
+          if (element["Category"] == selectedOption) {
+            //console.log(element)
+            selectList.push(element);
+          }
+        });
+      } else {
+        selectList = data;
+      }
+      draw_scatt1(selectList, g2, selectedOption);
+      draw_scatt2(selectList, g3, selectedOption);
+      draw_scatt4(selectList, g4, selectedOption);
+      draw_scatt5(selectList, g5, selectedOption);
+    });
   });
 });
