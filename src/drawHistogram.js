@@ -107,10 +107,7 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     .attr("height", function (d) {
       return HEIGHT - yscale(d.length);
     })
-    // .style("fill", function (d) {
-    //   return color(opt_v)
-
-    // });
+    
     .style("fill", function (d) {
       if (opt_v !=undefined) {
         return color(opt_v );

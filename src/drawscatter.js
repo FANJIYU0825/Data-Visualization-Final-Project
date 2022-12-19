@@ -91,7 +91,7 @@ export function draw_scatt1(data, g, filter) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt2(data, g, filter) {
+export function draw_scatt2(data, g, filter,Count) {
   // X : rating , Y: Size
 
   if (filter == undefined);
@@ -100,6 +100,15 @@ export function draw_scatt2(data, g, filter) {
     g.selectAll(".scatterYa").remove();
     g.selectAll(".scatterXa").remove();
   }
+  var result = [];
+  for (var i in Count) {
+    result.push([i, Count[i]]);
+  }
+  var legentext = [];
+  for (let i = 0; i < result.length; i++) {
+    legentext.push([result[i][0]]);
+  }
+  var color = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
@@ -197,14 +206,17 @@ export function draw_scatt2(data, g, filter) {
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Category == "BUSINESS") return colorscale(0);
-      else if (d.Category == "FAMILY") return colorscale(1);
-      else if (d.Category == "GAME") return colorscale(2);
-      else if (d.Category == "MEDICAL") return colorscale(3);
-      else if (d.Category == "TOOLS") return colorscale(4);
-      else return colorscale(5);
+      if (filter != undefined) {
+        return color(d.Category);
+      } else {
+        if (d.Category == "BUSINESS") return colorscale(0);
+        else if (d.Category == "FAMILY") return colorscale(1);
+        else if (d.Category == "GAME") return colorscale(2);
+        else if (d.Category == "MEDICAL") return colorscale(3);
+        else if (d.Category == "TOOLS") return colorscale(4);
+        else return colorscale(5);
+      }
     });
-
   var tip = top_tip2();
   circles.call(tip);
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
@@ -213,7 +225,7 @@ export function draw_scatt2(data, g, filter) {
   // circleG.call(brush);
 }
 
-export function draw_scatt4(data, g, filter) {
+export function draw_scatt4(data, g, filter, Count) {
   //text
   //x:Reviews
   //y:rating
@@ -223,6 +235,15 @@ export function draw_scatt4(data, g, filter) {
     g.selectAll(".scatterYa").remove();
     g.selectAll(".scatterXa").remove();
   }
+  var result = [];
+  for (var i in Count) {
+    result.push([i, Count[i]]);
+  }
+  var legentext = [];
+  for (let i = 0; i < result.length; i++) {
+    legentext.push([result[i][0]]);
+  }
+  var color = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
@@ -252,7 +273,7 @@ export function draw_scatt4(data, g, filter) {
   const xscale = d3
     .scaleLinear()
 
-    .domain([d3.min(data, (d) => d["Reviews"]) , mean])
+    .domain([d3.min(data, (d) => d["Reviews"]), mean])
     .range([0, WIDTH]);
   //xscale
   const yscale = d3
@@ -286,23 +307,27 @@ export function draw_scatt4(data, g, filter) {
     // .attr("cx", function (d) {return xscale(d["Reviews"]);})
     // .attr("cy", function (d) {return yscale(d["Rating"]);})
     .attr("cx", function (d) {
-      if ( d["Reviews"] != null && mean >= d["Reviews"]) {
+      if (d["Reviews"] != null && mean >= d["Reviews"]) {
         return xscale(d["Reviews"]);
       }
     })
     .attr("cy", function (d) {
-      if ( d["Reviews"] != null && mean >= d["Reviews"]) {
+      if (d["Reviews"] != null && mean >= d["Reviews"]) {
         return yscale(d["Rating"]);
       }
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Category == "BUSINESS") return colorscale(0);
-      else if (d.Category == "FAMILY") return colorscale(1);
-      else if (d.Category == "GAME") return colorscale(2);
-      else if (d.Category == "MEDICAL") return colorscale(3);
-      else if (d.Category == "TOOLS") return colorscale(4);
-      else return colorscale(5);
+      if (filter != undefined) {
+        return color(d.Category);
+      } else {
+        if (d.Category == "BUSINESS") return colorscale(0);
+        else if (d.Category == "FAMILY") return colorscale(1);
+        else if (d.Category == "GAME") return colorscale(2);
+        else if (d.Category == "MEDICAL") return colorscale(3);
+        else if (d.Category == "TOOLS") return colorscale(4);
+        else return colorscale(5);
+      }
     });
 
   var tip = top_tip3();
@@ -310,7 +335,7 @@ export function draw_scatt4(data, g, filter) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   return { circles: circles };
 }
-export function draw_scatt5(data, g, filter) {
+export function draw_scatt5(data, g, filter, Count) {
   // x:time y:reviews
   if (filter == undefined);
   else {
@@ -319,10 +344,15 @@ export function draw_scatt5(data, g, filter) {
     g.selectAll(".scatterXa").remove();
   }
 
-  const colorscale = d3
-    .scaleThreshold()
-    .domain([1, 2, 3, 4, 5])
-    .range(d3.schemeSet3);
+  var result = [];
+  for (var i in Count) {
+    result.push([i, Count[i]]);
+  }
+  var legentext = [];
+  for (let i = 0; i < result.length; i++) {
+    legentext.push([result[i][0]]);
+  }
+  var color = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
 
   g.append("g")
     .append("text")
@@ -386,12 +416,16 @@ export function draw_scatt5(data, g, filter) {
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Category == "BUSINESS") return colorscale(0);
-      else if (d.Category == "FAMILY") return colorscale(1);
-      else if (d.Category == "GAME") return colorscale(2);
-      else if (d.Category == "MEDICAL") return colorscale(3);
-      else if (d.Category == "TOOLS") return colorscale(4);
-      else return colorscale(5);
+      if (filter != undefined) {
+        return color(d.Category);
+      } else {
+        if (d.Category == "BUSINESS") return colorscale(0);
+        else if (d.Category == "FAMILY") return colorscale(1);
+        else if (d.Category == "GAME") return colorscale(2);
+        else if (d.Category == "MEDICAL") return colorscale(3);
+        else if (d.Category == "TOOLS") return colorscale(4);
+        else return colorscale(5);
+      }
     });
   var tip = top_tip3();
   circles.call(tip);
