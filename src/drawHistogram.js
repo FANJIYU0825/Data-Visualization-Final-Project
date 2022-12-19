@@ -14,6 +14,15 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     g.selectAll(".xax").remove();
     g.selectAll(".yax").remove();
   }
+  var result = [];
+  for (var i in Count) {
+    result.push([i, Count[i]]);
+  }
+  var legentext = [];
+  for (let i = 0; i < result.length; i++) {
+    legentext.push([result[i][0]]);
+  }
+  var color = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
 
   g.append("g")
     .append("text")
@@ -96,11 +105,10 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
 
     // });
     .style("fill", function (d) {
-      if (opt_v == "BUSINESS") return colorscale(0);
-      else if (opt_v == "FAMILY") return colorscale(1);
-      else if (opt_v == "GAME") return colorscale(2);
-      else if (opt_v == "MEDICAL") return colorscale(3);
-      else if (opt_v == "TOOLS") return colorscale(4);
-      else return colorscale(5);
+      if (opt_v !=undefined) {
+        return color(opt_v );
+      } else {
+        return "#69b3a2";
+      }
     });
 }
