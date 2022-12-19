@@ -69,9 +69,17 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       })
       .on("click", (d, i) => {
         g5.selectAll(".NormScatter").remove();
+        g5.selectAll(".scatterYa").remove();
+        g5.selectAll(".scatterXa").remove();
         g4.selectAll(".NormScatter").remove();
+        g4.selectAll(".scatterYa").remove();
+        g4.selectAll(".scatterXa").remove();
         g3.selectAll(".NormScatter").remove();
+        g3.selectAll(".scatterYa").remove();
+        g3.selectAll(".scatterXa").remove();
         g2.selectAll(".NormScatter").remove();
+        g2.selectAll(".scatterYa").remove();
+        g2.selectAll(".scatterXa").remove();
         var selectList = [];
         data.forEach((element) => {
           if (element["Category"] == d.data.key) {
