@@ -83,7 +83,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt1(selectList, g2, click_value);
         draw_scatt2(selectList, g3, click_value);
         draw_scatt4(selectList, g4, click_value);
-        draw_scatt5(selectList, g5, click_value);
+        draw_histamgram(selectList,g5,1,click_value);
       });
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
