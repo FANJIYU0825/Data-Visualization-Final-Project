@@ -7,7 +7,7 @@ const MARGIN = { LEFT: 30, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
-export function draw_histamgram(data, g, brus, opt_v) {
+export function draw_histamgram(data, Count, g, brus, opt_v) {
   //add text
   if (brus == 1) {
     // g.selectAll("text").remove();
@@ -91,6 +91,10 @@ export function draw_histamgram(data, g, brus, opt_v) {
     .attr("height", function (d) {
       return HEIGHT - yscale(d.length);
     })
+    // .style("fill", function (d) {
+    //   return color(opt_v)
+
+    // });
     .style("fill", function (d) {
       if (opt_v == "BUSINESS") return colorscale(0);
       else if (opt_v == "FAMILY") return colorscale(1);
@@ -99,12 +103,4 @@ export function draw_histamgram(data, g, brus, opt_v) {
       else if (opt_v == "TOOLS") return colorscale(4);
       else return colorscale(5);
     });
-  // var tip = top_tip3();
-  // rect.call(tip);
-  // rect.on("mousemove", tip.show).on("mouseout", tip.hide);
-  // selectbar(rect);
-  // g.call( d3.brushX()                     // Add the brush feature using the d3.brush function
-  //       .extent( [ [0,100], [400,300] ] )       // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
-  //     )
-  // return { g: hisg, rect: rect, xscale: xscale, yscale: yscale };
 }

@@ -212,98 +212,11 @@ export function draw_scatt2(data, g, filter) {
   circles_free.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt3(data, g, filter) {
-  //text
-  if (filter == undefined);
-  else {
-    g.selectAll(".NormScatter").remove();
-    g.selectAll(".scatterYa").remove();
-    g.selectAll(".scatterXa").remove();
-  }
 
-  // var brush = brush_scatter(g);
-  //https://github.com/d3/d3-scale-chromatic
-  //https://d3-graph-gallery.com/graph/custom_color.html
-  var Color = d3
-    .scaleSequential()
-    .domain([1, 100])
-    .interpolator(d3.interpolateYlOrBr);
-
-  g.append("g")
-    .append("text")
-    .attr("x", WIDTH + 10)
-    .attr("y", HEIGHT + 20)
-    .attr("font-size", "20px")
-    .attr("text-anchor", "right")
-    .text("Category");
-  g.append("text")
-    .attr("x", -(HEIGHT / 2))
-    .attr("y", -25)
-    .attr("font-size", "20px")
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .text("Size");
-  //產生xylabel
-  // yscale
-  const xscale = d3
-    .scaleLinear()
-    ///
-    .domain([
-      d3.min(data, (d) => d.Rating) - 0.1,
-      d3.max(data, (d) => d.Rating),
-    ])
-    .range([0, WIDTH]);
-  //xscale
-  const yscale = d3
-    .scaleLinear()
-    .domain([d3.min(data, (d) => d.Size) - 5, d3.max(data, (d) => d.Size) + 20])
-    .range([HEIGHT, 0]);
-  // Y label
-
-  const yAxisCall = d3.axisLeft(yscale);
-  const xAxisCall = d3.axisBottom(xscale);
-  //generate the box of the char
-  g.append("g").attr("class", "scatterYa").call(yAxisCall);
-  g.append("g")
-    .attr("class", "scatterXa")
-    .call(xAxisCall)
-    .attr("transform", "translate(0," + HEIGHT + ")");
-
-  // makesure the text is remove
-
-  var circles = g
-    .append("g")
-    .selectAll("dot")
-    .data(data)
-    .join("circle")
-    .attr("class", "NormScatter")
-    // circle size of the
-    .attr("cx", function (d) {
-      if (d.Rating != null && d.Size != null) {
-        return xscale(d.Rating);
-      }
-    })
-    .attr("cy", function (d) {
-      if (d.Rating != null && d.Size != null) {
-        return yscale(d.Size);
-      }
-    })
-    .attr("r", 7)
-    .style("fill", function (d) {
-      if (d.Rating != null && d.Size != null) {
-        return Color(d.Size);
-      }
-    });
-
-  var tip = top_tip2();
-  circles.call(tip);
-  circles.on("mousemove", tip.show).on("mouseout", tip.hide);
-  return { circles: circles };
-}
-
-function time_formate(data) {}
 export function draw_scatt4(data, g, filter) {
   //text
+  //x:Reviews
+  //y:rating
   if (filter == undefined);
   else {
     g.selectAll(".NormScatter").remove();
@@ -339,7 +252,7 @@ export function draw_scatt4(data, g, filter) {
   const xscale = d3
     .scaleLinear()
 
-    .domain([d3.min(data, (d) => d["Reviews"]) - 3, mean])
+    .domain([d3.min(data, (d) => d["Reviews"]) , mean])
     .range([0, WIDTH]);
   //xscale
   const yscale = d3
@@ -373,12 +286,12 @@ export function draw_scatt4(data, g, filter) {
     // .attr("cx", function (d) {return xscale(d["Reviews"]);})
     // .attr("cy", function (d) {return yscale(d["Rating"]);})
     .attr("cx", function (d) {
-      if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
+      if ( d["Reviews"] != null && mean >= d["Reviews"]) {
         return xscale(d["Reviews"]);
       }
     })
     .attr("cy", function (d) {
-      if (d.Type != "Free" && d["Reviews"] != null && mean >= d["Reviews"]) {
+      if ( d["Reviews"] != null && mean >= d["Reviews"]) {
         return yscale(d["Rating"]);
       }
     })

@@ -47,7 +47,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
 
     draw_scatt4(data, g4);
     // draw_scatt5(data, g5);
-    draw_histamgram(data,g5);
+    draw_histamgram(data,count,g5);
 
     pie
       .on("mouseover", function (d, i) {
@@ -83,7 +83,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt1(selectList, g2, click_value);
         draw_scatt2(selectList, g3, click_value);
         draw_scatt4(selectList, g4, click_value);
-        draw_histamgram(selectList,g5,1,click_value);
+        draw_histamgram(selectList,count,g5,1,click_value);
       });
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
@@ -106,7 +106,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       draw_scatt1(selectList, g2, selectedOption);
       draw_scatt2(selectList, g3, selectedOption);
       draw_scatt4(selectList, g4, selectedOption);
-      draw_histamgram(selectList,g5,1,selectedOption);
+      draw_histamgram(selectList,count,g5,1,selectedOption);
     });
   });
 });
