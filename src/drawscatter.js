@@ -10,7 +10,7 @@ const MARGIN = { LEFT: 30, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
-export function draw_scatt1(data, g, filter) {
+export function draw_scatt1(data, g, filter,Count) {
   // X: price , Y: Rating
   //text
 
@@ -20,6 +20,15 @@ export function draw_scatt1(data, g, filter) {
     g.selectAll(".scatterYa").remove();
     g.selectAll(".scatterXa").remove();
   }
+  var result = [];
+  for (var i in Count) {
+    result.push([i, Count[i]]);
+  }
+  var legentext = [];
+  for (let i = 0; i < result.length; i++) {
+    legentext.push([result[i][0]]);
+  }
+  var color = d3.scaleOrdinal().domain(legentext).range(d3.schemeSet3);
   const colorscale = d3
     .scaleThreshold()
     .domain([1, 2, 3, 4, 5])
@@ -78,12 +87,16 @@ export function draw_scatt1(data, g, filter) {
     })
     .attr("r", 7)
     .style("fill", function (d) {
-      if (d.Category == "BUSINESS") return colorscale(0);
-      else if (d.Category == "FAMILY") return colorscale(1);
-      else if (d.Category == "GAME") return colorscale(2);
-      else if (d.Category == "MEDICAL") return colorscale(3);
-      else if (d.Category == "TOOLS") return colorscale(4);
-      else return colorscale(5);
+      if (filter != undefined) {
+        return color(d.Category);
+      } else {
+        if (d.Category == "BUSINESS") return colorscale(0);
+        else if (d.Category == "FAMILY") return colorscale(1);
+        else if (d.Category == "GAME") return colorscale(2);
+        else if (d.Category == "MEDICAL") return colorscale(3);
+        else if (d.Category == "TOOLS") return colorscale(4);
+        else return colorscale(5);
+      }
     });
 
   var tip = top_tip1();

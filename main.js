@@ -42,7 +42,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     var piechar = piechart(count, g1);
     var pie = piechar["pie"];
     var radius = piechar["radius"];
-    draw_scatt1(data, g2);
+    draw_scatt1(data, g2,undefined,count);
     draw_scatt2(data, g3,undefined,count);
 
     draw_scatt4(data, g4,undefined,count);
@@ -80,7 +80,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
             selectList.push(element);
           }
         });
-        draw_scatt1(selectList, g2, click_value);
+        draw_scatt1(selectList, g2, click_value,count);
         draw_scatt2(selectList, g3, click_value,count);
         draw_scatt4(selectList, g4, click_value,count);
         draw_histamgram(selectList,count,g5,1,click_value);
