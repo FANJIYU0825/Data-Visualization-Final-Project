@@ -68,28 +68,19 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
       })
       .on("click", (d, i) => {
-        g5.selectAll(".NormScatter").remove();
-        g5.selectAll(".scatterYa").remove();
-        g5.selectAll(".scatterXa").remove();
-        g4.selectAll(".NormScatter").remove();
-        g4.selectAll(".scatterYa").remove();
-        g4.selectAll(".scatterXa").remove();
-        g3.selectAll(".NormScatter").remove();
-        g3.selectAll(".scatterYa").remove();
-        g3.selectAll(".scatterXa").remove();
-        g2.selectAll(".NormScatter").remove();
-        g2.selectAll(".scatterYa").remove();
-        g2.selectAll(".scatterXa").remove();
+        d3.select(this)
+        .transition()
+        .duration("50");
         var selectList = [];
         data.forEach((element) => {
           if (element["Category"] == d.data.key) {
             selectList.push(element);
           }
         });
-        draw_scatt1(selectList, g2);
-        draw_scatt2(selectList, g3);
-        draw_scatt4(selectList, g4);
-        draw_scatt5(selectList, g5);
+        draw_scatt1(selectList, g2,d.data.key);
+        draw_scatt2(selectList, g3,d.data.key);
+        draw_scatt4(selectList, g4,d.data.key);
+        draw_scatt5(selectList, g5,d.data.key);
       });
       botton['bottom'].on("change", function() {
     
@@ -98,10 +89,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     
         // // run the updateChart function with this selected option
         // updateChart(selectedOption)
-        g5.selectAll(".NormScatter").remove();
-        g4.selectAll(".NormScatter").remove();
-        g3.selectAll(".NormScatter").remove();
-        g2.selectAll(".NormScatter").remove();
+    
         var selectList = []
         if (selectedOption != "ALL"){
           data.forEach(element => {
