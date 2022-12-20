@@ -38,8 +38,9 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     var piechar = piechart(count, g1);
     var pie = piechar["pie"];
     var radius = piechar["radius"];
-    var pie_g = piechar["g"];
+
     draw_scatt1(data, g2, undefined, count);
+
     draw_scatt2(data, g3, undefined, count);
 
     draw_scatt4(data, g4, undefined, count);
@@ -66,12 +67,11 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .duration("50")
           .attr("opacity", "1")
           .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
-          
       })
       .on("click", (d, i) => {
         // the click we use that help the radius update by the click
         var click_value = d.data.key;
-        
+
         d3.select(this).transition().duration("50");
         var selectList = [];
         data.forEach((element) => {
@@ -83,8 +83,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt2(selectList, g3, click_value, count);
         draw_scatt4(selectList, g4, click_value, count);
         draw_histamgram(selectList, count, g5, 1, click_value);
-      })
- 
+      });
 
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
@@ -94,11 +93,20 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         d3.select(this).transition().duration("50");
         var selectList = [];
         data.forEach((element) => {
-          if (
-            element["Category"] == click_value &&
-            element["Type"] == selectedOption
-          ) {
-            selectList.push(element);
+          if (selectedOption != "ALL") {
+            if (
+              element["Category"] == click_value &&
+              element["Type"] == selectedOption
+            ) {
+              selectList.push(element);
+            }
+          } else {
+            if (
+              element["Category"] == click_value 
+              
+            ) {
+              selectList.push(element);
+            }
           }
         });
         draw_scatt1(selectList, g2, click_value, count);

@@ -14,13 +14,14 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     g.selectAll(".xax").remove();
     g.selectAll(".yax").remove();
   }
+  
   g.append("text")
     .attr("x", 200)
     .attr("y", 10)
     .attr("font-size", "30px")
     .attr("text-anchor", "middle")
     .text(opt_v);
-
+  
   var result = [];
   for (var i in Count) {
     result.push([i, Count[i]]);
