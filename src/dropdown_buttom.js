@@ -1,6 +1,6 @@
 export function dropdown(data) {
   var dropdown_button = d3.select("#botton").append("select");
-  var result = ["Free","Paid"];
+  var result = ["ALL","Free","Paid"];
 
   dropdown_button // Add a button
     .selectAll("myOptions")

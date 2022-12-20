@@ -1,9 +1,5 @@
 import { piechart } from "./src/mainpie.js";
-import {
-  draw_scatt1,
-  draw_scatt4,
-  draw_scatt5,
-} from "./src/drawscatter.js";
+import { draw_scatt1, draw_scatt4, draw_scatt5 } from "./src/drawscatter.js";
 import { draw_scatt2 } from "./src/drawscatter.js";
 import { frame_init } from "./src/init.js";
 import { dropdown } from "./src/dropdown_buttom.js";
@@ -42,12 +38,13 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     var piechar = piechart(count, g1);
     var pie = piechar["pie"];
     var radius = piechar["radius"];
-    draw_scatt1(data, g2,undefined,count);
-    draw_scatt2(data, g3,undefined,count);
+    var pie_g = piechar["g"];
+    draw_scatt1(data, g2, undefined, count);
+    draw_scatt2(data, g3, undefined, count);
 
-    draw_scatt4(data, g4,undefined,count);
+    draw_scatt4(data, g4, undefined, count);
     // draw_scatt5(data, g5);
-    draw_histamgram(data,count,g5);
+    draw_histamgram(data, count, g5);
 
     pie
       .on("mouseover", function (d, i) {
@@ -69,10 +66,12 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
           .duration("50")
           .attr("opacity", "1")
           .attr("d", d3.arc().innerRadius(0).outerRadius(radius));
+          
       })
       .on("click", (d, i) => {
         // the click we use that help the radius update by the click
         var click_value = d.data.key;
+        
         d3.select(this).transition().duration("50");
         var selectList = [];
         data.forEach((element) => {
@@ -80,11 +79,13 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
             selectList.push(element);
           }
         });
-        draw_scatt1(selectList, g2, click_value,count);
-        draw_scatt2(selectList, g3, click_value,count);
-        draw_scatt4(selectList, g4, click_value,count);
-        draw_histamgram(selectList,count,g5,1,click_value);
-      });
+        draw_scatt1(selectList, g2, click_value, count);
+        draw_scatt2(selectList, g3, click_value, count);
+        draw_scatt4(selectList, g4, click_value, count);
+        draw_histamgram(selectList, count, g5, 1, click_value);
+      })
+ 
+
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
       var selectedOption = d3.select(this).property("value");
@@ -93,14 +94,17 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         d3.select(this).transition().duration("50");
         var selectList = [];
         data.forEach((element) => {
-          if (element["Category"] == click_value&&element['Type']==selectedOption) {
+          if (
+            element["Category"] == click_value &&
+            element["Type"] == selectedOption
+          ) {
             selectList.push(element);
           }
         });
-        draw_scatt1(selectList, g2, click_value,count);
-        draw_scatt2(selectList, g3, click_value,count);
-        draw_scatt4(selectList, g4, click_value,count);
-        draw_histamgram(selectList,count,g5,1,click_value);
+        draw_scatt1(selectList, g2, click_value, count);
+        draw_scatt2(selectList, g3, click_value, count);
+        draw_scatt4(selectList, g4, click_value, count);
+        draw_histamgram(selectList, count, g5, 1, click_value);
       });
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
@@ -116,10 +120,10 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       } else {
         selectList = data;
       }
-      draw_scatt1(selectList, g2, selectedOption,count);
-      draw_scatt2(selectList, g3, selectedOption,count);
-      draw_scatt4(selectList, g4, selectedOption,count);
-      draw_histamgram(selectList,count,g5,1,selectedOption);
+      draw_scatt1(selectList, g2, selectedOption, count);
+      draw_scatt2(selectList, g3, selectedOption, count);
+      draw_scatt4(selectList, g4, selectedOption, count);
+      draw_histamgram(selectList, count, g5, 1, selectedOption);
     });
   });
 });
