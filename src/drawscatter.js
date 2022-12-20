@@ -234,10 +234,11 @@ export function draw_scatt2(data, g, filter,Count) {
       }
     });
   var tip = top_tip2();
-  circles.call(tip);
-  circles.on("mousemove", tip.show).on("mouseout", tip.hide);
+
   // circles_free.call(tip);
   // circles_free.on("mousemove", tip.show).on("mouseout", tip.hide);
+  circles.call(tip);
+  circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
 
