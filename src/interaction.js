@@ -37,19 +37,20 @@ export function top_tip(Parra) {
   }
 }
 export function top_tip1(Parra) {
- 
-    var tool = scatter_tool()
-    return tool
+  var tool = scatter_tool();
+  return tool;
 }
 export function top_tip2(Parra) {
- 
-    var tool = scatter1_tool()
-    return tool
+  var tool = scatter1_tool();
+  return tool;
 }
 export function top_tip3(Parra) {
- 
-    var tool = scatter2_tool()
-    return tool
+  var tool = scatter2_tool();
+  return tool;
+}
+export function top_tip4(Parra) {
+  var tool = hist_tool();
+  return tool;
 }
 
 function pie_tool() {
@@ -83,7 +84,7 @@ function scatter_tool() {
         "<space>" +
         d.Category +
         "<br> Ratting:<space> " +
-        d.Rating+
+        d.Rating +
         "<br> Price:<space> " +
         d.Price
     );
@@ -104,12 +105,11 @@ function scatter1_tool() {
         "<space>" +
         d.Category +
         "<br> Ratting:<space> " +
-        d.Rating+
+        d.Rating +
         "<br> Size:<space> " +
-        d.Size+
+        d.Size +
         "<br> Type:<space> " +
         d.Type
-
     );
 
   return tip;
@@ -129,6 +129,34 @@ function scatter2_tool() {
         d.Category +
         "<br> Reviews:<space> " +
         d.Reviews
+    );
+
+  return tip;
+
+  //
+}
+function hist_tool() {
+  // return the string
+  var tip = d3
+    .tip()
+    .attr("class", "d3-tip")
+    .html(
+      (d) =>
+        // d.ptsNorm < d.astNorm && d.rebNorm < d.astNorm
+        "<font color ='red'>Date Range</font>:" +
+        "<space>" +
+        d.x0.getUTCFullYear() +
+        "/" +
+        d.x0.getUTCMonth() +
+        "/" +
+        d.x1.getDate() +
+        "-" +
+        d.x1.getUTCFullYear() +
+        "/" +
+        d.x1.getUTCMonth() +
+        "/" +
+        d.x1.getDate()
+        +"<br> Month Total Reviews: "+d.length 
     );
 
   return tip;

@@ -1,4 +1,4 @@
-import { selectbar } from "./interaction.js";
+import { selectbar, top_tip4 } from "./interaction.js";
 const FWith = 600,
   FHeight = 400;
 const FLeftTopX = 10,
@@ -91,6 +91,7 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     .domain(xscale.domain()) // then the domain of the graphic
     .thresholds(xscale.ticks(40)); // then the numbers of bins
   var bins = histogram(data);
+
   var rect = g
     .selectAll("rect")
     .data(bins)
@@ -107,12 +108,16 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     .attr("height", function (d) {
       return HEIGHT - yscale(d.length);
     })
-    
+
     .style("fill", function (d) {
-      if (opt_v !=undefined) {
-        return color(opt_v );
+      if (opt_v != undefined) {
+        return color(opt_v);
       } else {
         return "#69b3a2";
       }
     });
+    var tip = top_tip4()
+    rect.call(tip)
+    rect.on("mousemove", tip.show).on("mouseout", tip.hide);
+    
 }
