@@ -95,7 +95,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
       var selectList = [];
       if (selectedOption != "ALL") {
         data.forEach((element) => {
-          if (element["Category"] == selectedOption) {
+          if (element["Type"] == selectedOption) {
             //console.log(element)
             selectList.push(element);
           }

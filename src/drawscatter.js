@@ -10,7 +10,7 @@ const MARGIN = { LEFT: 30, RIGHT: 100, TOP: 10, BOTTOM: 100 };
 const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
-export function draw_scatt1(data, g, filter,Count) {
+export function draw_scatt1(data, g, filter, Count) {
   // X: Installs , Y: Rating
   //text
 
@@ -71,9 +71,9 @@ export function draw_scatt1(data, g, filter,Count) {
     .call(xAxisCall)
     .attr("transform", "translate(0," + HEIGHT + ")")
     .selectAll("text")
-    .attr("dx","-2em")
-    .attr("dy",".15em")
-    .attr("transform", "rotate(-65)")
+    .attr("dx", "-2em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-65)");
 
   var circles = g
     .append("g")
@@ -108,7 +108,7 @@ export function draw_scatt1(data, g, filter,Count) {
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
-export function draw_scatt2(data, g, filter,Count) {
+export function draw_scatt2(data, g, filter, Count) {
   // X : rating , Y: Size
 
   if (filter == undefined);
@@ -117,6 +117,7 @@ export function draw_scatt2(data, g, filter,Count) {
     g.selectAll(".scatterYa").remove();
     g.selectAll(".scatterXa").remove();
   }
+  var cir_use = g.append("g");
   var result = [];
   for (var i in Count) {
     result.push([i, Count[i]]);
@@ -176,34 +177,10 @@ export function draw_scatt2(data, g, filter,Count) {
     .call(xAxisCall);
 
   //
-    
-  // var circles_free = g
-  //   .append("g")
-  //   .selectAll("dot")
-  //   .data(data)
-  //   .join("circle")
-  //   .attr("class", "NormScatter")
-  //   // circle size of the
-  //   .attr("cx", function (d) {
-  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-  //       return xscale(d.Rating);
-  //     }
-  //   })
-  //   .attr("cy", function (d) {
-  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-  //       return yscale(d.Size);
-  //     }
-  //   })
-  //   .attr("r", 7)
-  //   .style("fill", function (d) {
-  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-  //       return Color_free(d.Size);
-  //     }
-  //   })
-  //   .attr("stroke", "#000")
-  //   .attr("stroke-width", 0.1);
 
-  var circles = g
+
+
+  var circles = cir_use 
     .append("g")
     .selectAll("dot")
     .data(data)
@@ -212,13 +189,10 @@ export function draw_scatt2(data, g, filter,Count) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      
       return xscale(d.Rating);
-      
     })
     .attr("cy", function (d) {
       return yscale(d.Size);
-      
     })
     .attr("r", 7)
     .style("fill", function (d) {
