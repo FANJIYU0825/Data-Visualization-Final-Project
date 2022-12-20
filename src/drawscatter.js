@@ -58,7 +58,7 @@ export function draw_scatt1(data, g, filter, Count) {
   //yscale
   const yscale = d3
     .scaleLinear()
-    .domain([d3.min(data, (d) => d.Rating), d3.max(data, (d) => d.Rating)])
+    .domain([1, d3.max(data, (d) => d.Rating)])
     .range([HEIGHT, 0]);
   // Y label
 
