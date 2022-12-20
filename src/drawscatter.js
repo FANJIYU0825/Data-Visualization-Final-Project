@@ -11,7 +11,7 @@ const WIDTH = FWith - (MARGIN.LEFT + MARGIN.RIGHT);
 const HEIGHT = FHeight - (MARGIN.TOP + MARGIN.BOTTOM);
 
 export function draw_scatt1(data, g, filter,Count) {
-  // X: price , Y: Rating
+  // X: Installs , Y: Rating
   //text
 
   if (filter == undefined);
@@ -40,7 +40,7 @@ export function draw_scatt1(data, g, filter,Count) {
     .attr("y", HEIGHT + 40)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
-    .text("Price");
+    .text("Installs");
   g.append("text")
     .attr("x", -(HEIGHT / 2))
     .attr("y", -20)
@@ -53,8 +53,8 @@ export function draw_scatt1(data, g, filter,Count) {
   const xscale = d3
     .scaleLinear()
     ///
-    .domain([d3.min(data, (d) => d.Price), d3.max(data, (d) => d.Price)])
-    .range([10, WIDTH]);
+    .domain([d3.min(data, (d) => d.Installs), d3.max(data, (d) => d.Installs)])
+    .range([0, WIDTH]);
   //yscale
   const yscale = d3
     .scaleLinear()
@@ -69,7 +69,11 @@ export function draw_scatt1(data, g, filter,Count) {
   g.append("g")
     .attr("class", "scatterXa")
     .call(xAxisCall)
-    .attr("transform", "translate(0," + HEIGHT + ")");
+    .attr("transform", "translate(0," + HEIGHT + ")")
+    .selectAll("text")
+    .attr("dx","-2em")
+    .attr("dy",".15em")
+    .attr("transform", "rotate(-65)")
 
   var circles = g
     .append("g")
@@ -79,7 +83,7 @@ export function draw_scatt1(data, g, filter,Count) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      return xscale(d.Price);
+      return xscale(d.Installs);
     })
     .attr("cy", function (d) {
       return yscale(d.Rating);
@@ -172,32 +176,32 @@ export function draw_scatt2(data, g, filter,Count) {
     .call(xAxisCall);
 
   //
-
-  var circles_free = g
-    .append("g")
-    .selectAll("dot")
-    .data(data)
-    .join("circle")
-    .attr("class", "NormScatter")
-    // circle size of the
-    .attr("cx", function (d) {
-      if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-        return xscale(d.Rating);
-      }
-    })
-    .attr("cy", function (d) {
-      if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-        return yscale(d.Size);
-      }
-    })
-    .attr("r", 7)
-    .style("fill", function (d) {
-      if (d.Type == "Free" && d.Rating != null && d.Size != null) {
-        return Color_free(d.Size);
-      }
-    })
-    .attr("stroke", "#000")
-    .attr("stroke-width", 0.1);
+    
+  // var circles_free = g
+  //   .append("g")
+  //   .selectAll("dot")
+  //   .data(data)
+  //   .join("circle")
+  //   .attr("class", "NormScatter")
+  //   // circle size of the
+  //   .attr("cx", function (d) {
+  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+  //       return xscale(d.Rating);
+  //     }
+  //   })
+  //   .attr("cy", function (d) {
+  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+  //       return yscale(d.Size);
+  //     }
+  //   })
+  //   .attr("r", 7)
+  //   .style("fill", function (d) {
+  //     if (d.Type == "Free" && d.Rating != null && d.Size != null) {
+  //       return Color_free(d.Size);
+  //     }
+  //   })
+  //   .attr("stroke", "#000")
+  //   .attr("stroke-width", 0.1);
 
   var circles = g
     .append("g")
@@ -208,14 +212,13 @@ export function draw_scatt2(data, g, filter,Count) {
     .attr("class", "NormScatter")
     // circle size of the
     .attr("cx", function (d) {
-      if (d.Type == "Paid") {
-        return xscale(d.Rating);
-      }
+      
+      return xscale(d.Rating);
+      
     })
     .attr("cy", function (d) {
-      if (d.Type == "Paid") return yscale(d.Size);
-      else {
-      }
+      return yscale(d.Size);
+      
     })
     .attr("r", 7)
     .style("fill", function (d) {
@@ -233,8 +236,8 @@ export function draw_scatt2(data, g, filter,Count) {
   var tip = top_tip2();
   circles.call(tip);
   circles.on("mousemove", tip.show).on("mouseout", tip.hide);
-  circles_free.call(tip);
-  circles_free.on("mousemove", tip.show).on("mouseout", tip.hide);
+  // circles_free.call(tip);
+  // circles_free.on("mousemove", tip.show).on("mouseout", tip.hide);
   // circleG.call(brush);
 }
 

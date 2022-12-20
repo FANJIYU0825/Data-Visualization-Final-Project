@@ -83,10 +83,12 @@ function scatter_tool() {
         "<font color ='red'> Category</font>:" +
         "<space>" +
         d.Category +
+        "<br> App name:<space> " +
+        d.App +
         "<br> Ratting:<space> " +
         d.Rating +
-        "<br> Price:<space> " +
-        d.Price
+        "<br> Installs:<space> " +
+        d.Installs
     );
 
   return tip;
@@ -104,6 +106,8 @@ function scatter1_tool() {
         "<font color ='red'> Category</font>:" +
         "<space>" +
         d.Category +
+        "<br> App name:<space> " +
+        d.App +
         "<br> Ratting:<space> " +
         d.Rating +
         "<br> Size:<space> " +
@@ -127,6 +131,8 @@ function scatter2_tool() {
         "<font color ='red'> Category</font>:" +
         "<space>" +
         d.Category +
+        "<br> App name:<space> " +
+        d.App +
         "<br> Reviews:<space> " +
         d.Reviews
     );
