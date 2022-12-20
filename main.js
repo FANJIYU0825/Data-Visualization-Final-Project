@@ -88,7 +88,20 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
       var selectedOption = d3.select(this).property("value");
-
+      pie.on("click", (d, i) => {
+        var click_value = d.data.key;
+        d3.select(this).transition().duration("50");
+        var selectList = [];
+        data.forEach((element) => {
+          if (element["Category"] == click_value&&element['Type']==selectedOption) {
+            selectList.push(element);
+          }
+        });
+        draw_scatt1(selectList, g2, click_value,count);
+        draw_scatt2(selectList, g3, click_value,count);
+        draw_scatt4(selectList, g4, click_value,count);
+        draw_histamgram(selectList,count,g5,1,click_value);
+      });
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
 
