@@ -37,7 +37,7 @@ export function draw_scatt1(data, g, filter, Count) {
   g.append("g")
     .append("text")
     .attr("x", WIDTH)
-    .attr("y", HEIGHT + 40)
+    .attr("y", HEIGHT + 80)
     .attr("font-size", "20px")
     .attr("text-anchor", "middle")
     .text("Installs");
@@ -71,7 +71,7 @@ export function draw_scatt1(data, g, filter, Count) {
     .call(xAxisCall)
     .attr("transform", "translate(0," + HEIGHT + ")")
     .selectAll("text")
-    .attr("dx", "-2em")
+    .attr("dx", "-3em")
     .attr("dy", ".15em")
     .attr("transform", "rotate(-65)");
 
