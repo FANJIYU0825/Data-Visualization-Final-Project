@@ -4,6 +4,7 @@ import { draw_scatt2 } from "./src/drawscatter.js";
 import { frame_init } from "./src/init.js";
 import { dropdown } from "./src/dropdown_buttom.js";
 import { draw_histamgram } from "./src/drawHistogram.js";
+import { change_picture } from "./src/picture_change.js";
 
 const FWith = 800,
   FHeight = 400;
@@ -30,11 +31,12 @@ var g3 = frame_init("area2");
 var g4 = frame_init("area3");
 
 var g5 = frame_init("area4");
+var gpic = frame_init("pic");
 //main data
 d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
   d3.json("./persudu/subcount.json").then(function (count) {
     var botton = dropdown(count);
-
+    change_picture(gpic, "GOOGLE-PLAY");
     var piechar = piechart(count, g1);
     var pie = piechar["pie"];
     var radius = piechar["radius"];
@@ -83,6 +85,9 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt2(selectList, g3, click_value, count);
         draw_scatt4(selectList, g4, click_value, count);
         draw_histamgram(selectList, count, g5, 1, click_value);
+        gpic.selectAll(".sth").remove();
+        gpic.selectAll('text').remove();
+        change_picture(gpic, click_value);
       });
 
     botton["bottom"].on("change", function () {
@@ -101,10 +106,7 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
               selectList.push(element);
             }
           } else {
-            if (
-              element["Category"] == click_value 
-              
-            ) {
+            if (element["Category"] == click_value) {
               selectList.push(element);
             }
           }
@@ -113,6 +115,9 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
         draw_scatt2(selectList, g3, click_value, count);
         draw_scatt4(selectList, g4, click_value, count);
         draw_histamgram(selectList, count, g5, 1, click_value);
+        gpic.selectAll(".sth").remove();
+        gpic.selectAll('text').remove();
+        change_picture(gpic, click_value);
       });
       // // run the updateChart function with this selected option
       // updateChart(selectedOption)
