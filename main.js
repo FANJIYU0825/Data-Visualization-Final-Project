@@ -92,7 +92,10 @@ d3.csv("./persudu/data_clean.csv", d3.autoType).then(function (data) {
 
     botton["bottom"].on("change", function () {
       // recover the option that has been chosen
+      gpic.selectAll(".sth").remove();
+      gpic.selectAll('text').remove();
       var selectedOption = d3.select(this).property("value");
+      change_picture(gpic, "GOOGLE-PLAY");
       pie.on("click", (d, i) => {
         var click_value = d.data.key;
         d3.select(this).transition().duration("50");
