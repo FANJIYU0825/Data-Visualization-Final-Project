@@ -21,7 +21,9 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     .attr("font-size", "30px")
     .attr("text-anchor", "middle")
     .text(opt_v);
-  
+  if (opt_v=='ALL'|| opt_v=="Free"||opt_v=='Paid'){
+    opt_v=1
+  }
   var result = [];
   for (var i in Count) {
     result.push([i, Count[i]]);
@@ -111,7 +113,7 @@ export function draw_histamgram(data, Count, g, brus, opt_v) {
     })
 
     .style("fill", function (d) {
-      if (opt_v != undefined) {
+      if (opt_v != undefined ||opt_v!=1) {
         return color(opt_v);
       } else {
         return "#69b3a2";
